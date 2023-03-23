@@ -6,10 +6,25 @@ type MinHeap struct {
 	arr []int
 }
 
+//inserting into the heap
+
 func (h *MinHeap) insert(val int) {
 	h.arr = append(h.arr, val)
 	h.heapifyTop()
 }
+
+//heapify to maintain the heap properties
+
+func (h *MinHeap) heapifyTop() {
+	index := len(h.arr) - 1
+	for h.arr[parent(index)] > h.arr[index] {
+		h.swap(parent(index), index)
+		index = parent(index)
+	}
+}
+
+//extracting the min element
+
 func (h *MinHeap) extract() {
 	element := h.arr[0]
 	h.arr[0] = h.arr[len(h.arr)-1]
@@ -17,6 +32,9 @@ func (h *MinHeap) extract() {
 	fmt.Println(element)
 	h.heapifyBottom()
 }
+
+//heapify to maintain the heap properties
+
 func (h *MinHeap) heapifyBottom() {
 	index := 0
 	for lchild(index) <= len(h.arr)-1 {
@@ -36,13 +54,7 @@ func (h *MinHeap) heapifyBottom() {
 		}
 	}
 }
-func (h *MinHeap) heapifyTop() {
-	index := len(h.arr) - 1
-	for h.arr[parent(index)] > h.arr[index] {
-		h.swap(parent(index), index)
-		index = parent(index)
-	}
-}
+
 func (h *MinHeap) swap(i, j int) {
 	h.arr[i], h.arr[j] = h.arr[j], h.arr[i]
 }
